@@ -1,7 +1,8 @@
 {
- "name": "mtg-judge",
- "version": "1.0.0",
- "dependencies": {
-   "@google/genai": "^0.1.1"
- }
+  "name": "mtg-judge",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^0.1.1"
+  }
 }
