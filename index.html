@@ -687,21 +687,21 @@
       const userMessage = "SCENARIO / QUESTION:\n" + question + "\n\nVERIFIED CARD DATA (from Scryfall, live):\n\n" + blocks.join('\n\n---\n\n');
 
       const response = await fetch('/api/judge', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({
-         question: question,
-         cardBlocks: blocks
-       })
-     });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    question: question,
+    cardBlocks: blocks
+  })
+});
 
-      if (token !== activeRequestToken) return;
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error((data && data.error && data.error.message) || 'Ruling request failed.');
-      }
-      const text = (data.content || []).map(function(b) { return b.type === 'text' ? b.text : ''; }).filter(Boolean).join('\n');
-      if (!text) throw new Error('Empty response from judge.');
+if (token !== activeRequestToken) return;
+const data = await response.json();
+if (!response.ok) {
+  throw new Error((data && data.error) || 'Ruling request failed.');
+}
+const text = (data.content || []).map(function(b) { return b.type === 'text' ? b.text : ''; }).filter(Boolean).join('\n');
+if (!text) throw new Error('Empty response from judge.');
 
       timestampEl.textContent = new Date().toLocaleString();
       renderResult(text);
