@@ -1,10 +1,12 @@
 import { GoogleGenAI } from '@google/genai';
 export default async function handler(req, res) {
+ // Ensure it's a POST request
  if (req.method !== 'POST') {
-   return res.status(405).json({ error: 'Method not allowed' });
+   res.setHeader('Allow', ['POST']);
+   return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
  }
  try {
-   const { question, cardBlocks } = req.body;
+   const { question, cardBlocks } = req.body || {};
    if (!cardBlocks || cardBlocks.length === 0) {
      return res.status(400).json({ error: 'No cards provided.' });
    }
@@ -29,7 +31,7 @@ export default async function handler(req, res) {
    }
    return res.status(200).json({ content: [{ type: 'text', text }] });
  } catch (err) {
-   console.error('API Error:', err);
+   console.error('API Error details:', err);
    return res.status(500).json({ error: 'Server error: ' + err.message });
  }
 }
