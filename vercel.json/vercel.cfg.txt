@@ -1,0 +1,8 @@
+{
+
+  "buildCommand": "",
+
+  "outputDirectory": "."
+
+}
+ 
