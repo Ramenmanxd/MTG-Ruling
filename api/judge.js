@@ -54,7 +54,7 @@ VERIFIED CARD DATA:
 ${cardBlocks.join("\n\n---\n\n")}
 `;
 
-    const MODEL = "gemini-pro-latest";
+const MODEL = "gemini-3.5-flash";
 
     const geminiResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
