@@ -55,6 +55,12 @@ Step-by-step explanation.
 Anything that could change the outcome.
 `;
 
+ const cleanCardBlocks = cardBlocks.map(block =>
+  block
+    .replace(/\$\\\{/g, "{")
+    .replace(/\\\}/g, "}")
+);
+    
 const userPrompt = `
 SCENARIO / QUESTION:
 ${question}
