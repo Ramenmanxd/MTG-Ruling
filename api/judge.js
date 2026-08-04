@@ -34,7 +34,7 @@ IMPORTANT:
 - Always complete all four sections.
 - Never end a sentence halfway through.
 - If nearing token limits, shorten explanations rather than truncating.
-- The response must contain:
+- The final response must always contain:
   ## Ruling
   ## Card Check
   ## Why
@@ -99,7 +99,7 @@ const MODEL = "gemini-3.5-flash";
           ],
           generationConfig: {
             temperature: 0.1,
-            maxOutputTokens: 3000
+            maxOutputTokens: 6000
           }
         })
       }
@@ -123,6 +123,8 @@ const MODEL = "gemini-3.5-flash";
         .join("\n")
         .trim();
 
+    console.log("Response length:", text.length);
+    
     if (!text) {
       return res.status(500).json({
         error: "Gemini returned an empty response."
