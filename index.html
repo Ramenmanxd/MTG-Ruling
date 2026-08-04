@@ -606,8 +606,10 @@
   }
 
   function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
+  return str.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
 
 function renderManaSymbols(text) {
   const manaSymbols = [
@@ -617,24 +619,24 @@ function renderManaSymbols(text) {
     "WB","UR","BG","RW","GU"
   ];
 
-  manaSymbols.forEach(symbol => {
-    const regex = new RegExp(`\\{${symbol}\\}`, 'g');
+  manaSymbols.forEach(function(symbol) {
+    const regex = new RegExp(`\\{${symbol}\\}`, "g");
 
     text = text.replace(
       regex,
-      `<img class="mana-symbol" src="https://svgs.scryfall.io/card-symbols/${symbol}.svg" alt="{${symbol}}eFormat(text) {
+      `https://svgs.scryfall.io/card-symbols/${symbol}.svg`
+    );
+  });
+
+  return text;
+}
+
+function inlineFormat(text) {
   text = escapeHtml(text)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 
   return renderManaSymbols(text);
 }
-
-  function paragraphsHtml(text) {
-    return text.split(/\n{2,}/).map(function(p) {
-      return '<p>' + inlineFormat(p.trim()).replace(/\n/g, '<br>') + '</p>';
-    }).join('');
-  }
-
   function renderResult(rawText) {
     const sectionNames = ['Ruling', 'Card Check', 'Why', 'Caveats'];
     const sections = {};
