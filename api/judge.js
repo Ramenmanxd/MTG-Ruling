@@ -30,6 +30,16 @@ Rules:
 - Explain stack interactions carefully.
 - Explain timing, priority, triggers, replacement effects and state-based actions when relevant.
 
+IMPORTANT:
+- Always complete all four sections.
+- Never end a sentence halfway through.
+- If nearing token limits, shorten explanations rather than truncating.
+- The response must contain:
+  ## Ruling
+  ## Card Check
+  ## Why
+  ## Caveats
+
 Always reply in exactly this format:
 
 ## Ruling
@@ -45,13 +55,13 @@ Step-by-step explanation.
 Anything that could change the outcome.
 `;
 
-    const userPrompt = `
+const userPrompt = `
 SCENARIO / QUESTION:
 ${question}
 
 VERIFIED CARD DATA:
 
-${cardBlocks.join("\n\n---\n\n")}
+${cleanCardBlocks.join("\n\n---\n\n")}
 `;
 
 const MODEL = "gemini-3.5-flash";
@@ -82,8 +92,8 @@ const MODEL = "gemini-3.5-flash";
             }
           ],
           generationConfig: {
-            temperature: 0.2,
-            maxOutputTokens: 1500
+            temperature: 0.1,
+            maxOutputTokens: 3000
           }
         })
       }
