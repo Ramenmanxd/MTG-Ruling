@@ -515,6 +515,19 @@
     return '';
   }
 
+function manaCostToWords(manaCost) {
+  return manaCost
+    .replace(/\{W\}/g, " White ")
+    .replace(/\{U\}/g, " Blue ")
+    .replace(/\{B\}/g, " Black ")
+    .replace(/\{R\}/g, " Red ")
+    .replace(/\{G\}/g, " Green ")
+    .replace(/\{C\}/g, " Colorless ")
+    .replace(/\{(\d+)\}/g, " $1 Generic ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
   async function showViewer(card) {
     const viewer = document.getElementById('mjViewer');
     viewer.innerHTML = '<div class="mj-viewer-empty"><span class="mj-spinner"></span>Loading ' + escapeHtml(card.name) + '...</div>';
@@ -543,7 +556,10 @@
       '<div class="mj-viewer-grid">' +
         '<div>' + (img ? '<img class="mj-viewer-img" src="' + img + '" alt="' + escapeHtml(card.name) + '">' : '') + '</div>' +
         '<div>' +
-          '<div class="mj-viewer-name">' + escapeHtml(card.name) + (card.mana_cost ? '  ' + escapeHtml(card.mana_cost) : '') + '</div>' +
+          '<div class="mj-viewer-name">' +
+escapeHtml(card.name) +
+(card.mana_cost ? ' (' + manaCostToWords(card.mana_cost) + ')' : '') +
+'</div>' +
           '<div class="mj-viewer-typeline">' + escapeHtml(card.type_line || '') + '</div>' +
           '<div class="mj-viewer-oracle">' + inlineFormat(oracle || 'No Oracle text.') + '</div>' +
           (card.power ? '<div class="mj-viewer-pt">' + card.power + ' / ' + card.toughness + '</div>' : '') +
