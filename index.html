@@ -605,29 +605,13 @@
     return lines.join('\n');
   }
 
-  function escapeHtml(str) {
+function escapeHtml(str) {
   return str.replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }
 
 function renderManaSymbols(text) {
-  const manaSymbols = [
-    "W","U","B","R","G","C","X",
-    "0","1","2","3","4","5","6","7","8","9","10",
-    "WU","UB","BR","RG","GW",
-    "WB","UR","BG","RW","GU"
-  ];
-
-  manaSymbols.forEach(function(symbol) {
-    const regex = new RegExp(`\\{${symbol}\\}`, "g");
-
-    text = text.replace(
-      regex,
-      `https://svgs.scryfall.io/card-symbols/${symbol}.svg`
-    );
-  });
-
   return text;
 }
 
@@ -637,6 +621,13 @@ function inlineFormat(text) {
 
   return renderManaSymbols(text);
 }
+
+function paragraphsHtml(text) {
+  return text.split(/\n{2,}/).map(function(p) {
+    return '<p>' + inlineFormat(p.trim()).replace(/\n/g, '<br>') + '</p>';
+  }).join('');
+}
+  
   function renderResult(rawText) {
     const sectionNames = ['Ruling', 'Card Check', 'Why', 'Caveats'];
     const sections = {};
